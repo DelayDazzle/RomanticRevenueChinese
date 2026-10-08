@@ -1,0 +1,10 @@
+{
+  "Name": "Romantic Revenue Chinese Localization",
+  "Author": "DelayDazzle",
+  "Version": "1.0.0",
+  "Description": "Romantic Revenue 的独立汉化补丁。",
+  "UniqueID": "DelayDazzle.RomanticRevenueChinese",
+  "EntryDll": "RomanticRevenueChinese.dll",
+  "MinimumApiVersion": "4.0.0",
+  "UpdateKeys": []
+}
