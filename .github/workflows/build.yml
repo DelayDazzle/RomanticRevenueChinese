@@ -1,0 +1,41 @@
+name: Build
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore
+        run: dotnet restore RomanticRevenueChinese.csproj
+
+      - name: Build
+        run: dotnet build RomanticRevenueChinese.csproj --configuration Release --no-restore
+
+      - name: Prepare package
+        run: |
+          mkdir -p package/RomanticRevenueChinese
+          cp manifest.json package/RomanticRevenueChinese/
+          cp bin/Release/net9.0/RomanticRevenueChinese.dll package/RomanticRevenueChinese/
+          cd package
+          zip -r RomanticRevenueChinese.zip RomanticRevenueChinese
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: RomanticRevenueChinese
+          path: package/RomanticRevenueChinese.zip
